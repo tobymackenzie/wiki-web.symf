@@ -1,0 +1,27 @@
+{
+	"name": "tjm/wiki-web"
+	,"description": "Web interface for 'tjm/wiki' using Symfony"
+	,"authors": [
+		{
+			"name": "Toby Mackenzie"
+			,"email": "public@tobymackenzie.com"
+			,"homepage": "https://www.tobymackenzie.com"
+		}
+	]
+	,"license": "0BSD"
+	,"autoload": {
+		"psr-4": {
+			"TJM\\WikiWeb\\": "src"
+		}
+	}
+	,"require": {
+		"php": ">=7.1.3"
+		,"symfony/framework-bundle": "^5.4 | ^4.4"
+		,"symfony/mime": "^5.4 | ^4.4"
+		,"symfony/yaml": "^5.4 | ^4.4"
+		,"tjm/wiki": "@dev"
+	}
+	,"require-dev": {
+		"symfony/browser-kit": "^5.4 | ^4.4"
+	}
+}

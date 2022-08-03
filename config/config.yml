@@ -1,0 +1,16 @@
+framework: ~
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+  TJM\Wiki\Wiki:
+    arguments: ['%kernel.project_dir%/wiki']
+  TJM\WikiWeb\WikiWeb:
+    arguments:
+      $opts: []
+    tags:
+      - 'controller.service_arguments'
+      -
+        event: 'kernel.exception'
+        method: 'handleException'
+        name: 'kernel.event_listener'

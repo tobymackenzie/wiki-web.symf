@@ -1,0 +1,18 @@
+framework:
+  test: true
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+    public: true
+  TJM\Wiki\Wiki:
+    arguments: ['%kernel.project_dir%/tests/tmp']
+  TJM\WikiWeb\WikiWeb:
+    arguments:
+      $opts: []
+    tags:
+      - 'controller.service_arguments'
+      -
+        event: 'kernel.exception'
+        method: 'handleException'
+        name: 'kernel.event_listener'
