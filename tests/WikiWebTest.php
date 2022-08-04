@@ -5,6 +5,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TJM\Wiki\File;
 use TJM\Wiki\Wiki;
+use TJM\WikiWeb\FormatConverter\MarkdownConverter;
 use TJM\WikiWeb\WikiWeb;
 
 class WikiWebTest extends TestCase{
@@ -19,11 +20,22 @@ class WikiWebTest extends TestCase{
 	static public function tearDownAfterClass(): void{
 		rmdir(self::WIKI_DIR);
 	}
+	protected function getWikiWeb(){
+		return new WikiWeb(
+			new Wiki([
+				'path'=> self::WIKI_DIR,
+			])
+			,[
+				'converters'=> [
+					new MarkdownConverter(),
+				],
+			]
+		);
+	}
 
 	public function testNotFoundViewFileAction(){
-		$wiki = new Wiki(self::WIKI_DIR);
-		$wweb = new WikiWeb($wiki);
-		$wiki->writeFile(new File([
+		$wweb = $this->getWikiWeb();
+		$wweb->writeFile(new File([
 			'content'=> 'hello world',
 			'path'=> '/foo.md',
 		]));
@@ -31,9 +43,8 @@ class WikiWebTest extends TestCase{
 		$wweb->viewFileAction('/bar');
 	}
 	public function testFoundViewFileAction(){
-		$wiki = new Wiki(self::WIKI_DIR);
-		$wweb = new WikiWeb($wiki);
-		$wiki->writeFile(new File([
+		$wweb = $this->getWikiWeb();
+		$wweb->writeFile(new File([
 			'path'=> '/foo.md',
 			'content'=> 'hello world',
 		]));
@@ -42,10 +53,18 @@ class WikiWebTest extends TestCase{
 		$this->assertMatchesRegularExpression('/^<\!doctype html>/', $response->getContent());
 		$this->assertMatchesRegularExpression('/hello world/', $response->getContent());
 	}
+	public function testNoConverterFoundViewFileAction(){
+		$wweb = $this->getWikiWeb();
+		$wweb->writeFile(new File([
+			'content'=> 'hello world',
+			'path'=> '/foo.md',
+		]));
+		$this->expectException(NotFoundHttpException::class);
+		$wweb->viewFileAction('/foo.asdf');
+	}
 	public function testRedirectHTMLExtension(){
-		$wiki = new Wiki(self::WIKI_DIR);
-		$wweb = new WikiWeb($wiki);
-		$wiki->writeFile(new File([
+		$wweb = $this->getWikiWeb();
+		$wweb->writeFile(new File([
 			'content'=> 'hello world',
 			'path'=> '/foo.md',
 		]));

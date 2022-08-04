@@ -5,11 +5,16 @@ services:
     autoconfigure: true
     autowire: true
     public: true
+  ParsedownExtra:
+    class: ParsedownExtra
   TJM\Wiki\Wiki:
     arguments: ['%kernel.project_dir%/tests/tmp']
+  TJM\WikiWeb\FormatConverter\MarkdownConverter: ~
   TJM\WikiWeb\WikiWeb:
     arguments:
-      $opts: []
+      $opts:
+        converters:
+          - '@TJM\WikiWeb\FormatConverter\MarkdownConverter'
     tags:
       - 'controller.service_arguments'
       -

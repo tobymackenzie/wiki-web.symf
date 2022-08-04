@@ -10,11 +10,13 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Mime\MimeTypes;
 use TJM\Wiki\Wiki;
 use TJM\Wiki\File;
+use TJM\WikiWeb\FormatConverter\ConverterInterface;
 
 class WikiWeb{
 	const DIR = __DIR__ . '/..';
 	const CONFIG_DIR = self::DIR . '/config';
 	const WEB_DIR = self::DIR . '/web';
+	protected $converters = [];
 	protected $mimeTypes;
 	protected $wiki;
 
@@ -65,12 +67,17 @@ class WikiWeb{
 				return new RedirectResponse($pagePath, 302);
 			}
 			$response = new Response();
-			if(strlen($extension) === 0){
-				$response->setContent('<!doctype html><h1>' . $file->getPath() . '</h1>' . $file->getContent());
-			}elseif($extension === $file->getExtension()){
-				$response->setContent($file->getContent());
-				$response->headers->set('Content-Type', $this->getMimeType($extension));
-			}else{
+			try{
+				if(strlen($extension) === 0){
+					$response->setContent('<!doctype html><h1>' . $file->getPath() . '</h1>' . $this->convertFile($file, 'html'));
+				}elseif($extension === $file->getExtension()){
+					$response->setContent($file->getContent());
+					$response->headers->set('Content-Type', $this->getMimeType($extension));
+				}else{
+					$response->setContent($this->convertFile($file, $extension));
+					$response->headers->set('Content-Type', $this->getMimeType($extension));
+				}
+			}catch(Exception $e){
 				throw new NotFoundHttpException();
 			}
 			return $response;
@@ -87,6 +94,21 @@ class WikiWeb{
 			$response->headers->replace($exception->getHeaders());
 			$event->setResponse($response);
 		}
+	}
+
+	/*=====
+	==converters
+	=====*/
+	public function addConverter(ConverterInterface $converter){
+		$this->converters[] = $converter;
+	}
+	protected function convertFile(File $file, $to){
+		foreach($this->converters as $converter){
+			if($converter->supports($file->getExtension(), $to)){
+				return $converter->convert($file->getContent(), $file->getExtension(), $to);
+			}
+		}
+		throw new Exception("No converter found to convert from {$file->getExtension()} to {$to}");
 	}
 
 	/*=====
