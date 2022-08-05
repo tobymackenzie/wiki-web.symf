@@ -5,8 +5,7 @@ services:
     autoconfigure: true
     autowire: true
     public: true
-  ParsedownExtra:
-    class: ParsedownExtra
+  League\CommonMark\CommonMarkConverter: ~
   TJM\Wiki\Wiki:
     arguments: ['%kernel.project_dir%/tests/tmp']
   TJM\WikiWeb\FormatConverter\MarkdownConverter: ~
