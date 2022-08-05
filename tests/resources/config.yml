@@ -11,7 +11,8 @@ services:
   Psr\Log\NullLogger: ~
   TJM\Wiki\Wiki:
     arguments: ['%kernel.project_dir%/tests/tmp']
-  TJM\WikiWeb\FormatConverter\MarkdownConverter: ~
+  TJM\WikiWeb\FormatConverter\MarkdownConverter:
+    arguments: ['@League\CommonMark\CommonMarkConverter']
   TJM\WikiWeb\WikiWeb:
     arguments:
       $opts:

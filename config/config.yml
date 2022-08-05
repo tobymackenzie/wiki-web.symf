@@ -3,13 +3,19 @@ services:
   _defaults:
     autoconfigure: true
     autowire: true
-  League\CommonMark\CommonMarkConverter: ~
+  League\CommonMark\Environment\Environment:
+    calls:
+      - addExtension: ['@League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension']
+  League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension: ~
+  League\CommonMark\MarkdownConverter:
+    arguments: ['@League\CommonMark\Environment\Environment']
   logger:
     alias: Psr\Log\NullLogger
   Psr\Log\NullLogger: ~
   TJM\Wiki\Wiki:
     arguments: ['%kernel.project_dir%/wiki']
-  TJM\WikiWeb\FormatConverter\MarkdownConverter: ~
+  TJM\WikiWeb\FormatConverter\MarkdownConverter:
+    arguments: ['@League\CommonMark\MarkdownConverter']
   TJM\WikiWeb\WikiWeb:
     arguments:
       $opts:
