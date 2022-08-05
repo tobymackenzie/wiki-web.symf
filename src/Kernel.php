@@ -12,8 +12,8 @@ class Kernel extends Base{
 	use MicroKernelTrait;
 
 	protected $config = WikiWeb::CONFIG_DIR . '/config.yml';
-	protected $debug = false;
-	protected $environment = 'prod';
+	protected $debug;
+	protected $environment;
 	protected $routes = WikiWeb::CONFIG_DIR . '/public_routing.yml';
 
 	public function __construct($opts = null){
@@ -31,6 +31,14 @@ class Kernel extends Base{
 					$this->$opt = $value;
 				}
 			}
+		}
+		//--default to dev + debug in cli
+		//-# ensures config changes are automatically handled
+		if(!isset($this->environment)){
+			$this->environment = (php_sapi_name() === 'cli' ? 'dev' : 'prod');
+		}
+		if(!isset($this->debug)){
+			$this->debug = $this->environment !== 'prod';
 		}
 	}
 	protected function configureContainer(ContainerConfigurator $conf, LoaderInterface $loader){
