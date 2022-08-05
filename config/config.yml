@@ -4,6 +4,9 @@ services:
     autoconfigure: true
     autowire: true
   League\CommonMark\CommonMarkConvertera: ~
+  logger:
+    alias: Psr\Log\NullLogger
+  Psr\Log\NullLogger: ~
   TJM\Wiki\Wiki:
     arguments: ['%kernel.project_dir%/wiki']
   TJM\WikiWeb\FormatConverter\MarkdownConverter: ~

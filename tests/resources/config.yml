@@ -6,6 +6,9 @@ services:
     autowire: true
     public: true
   League\CommonMark\CommonMarkConverter: ~
+  logger:
+    alias: Psr\Log\NullLogger
+  Psr\Log\NullLogger: ~
   TJM\Wiki\Wiki:
     arguments: ['%kernel.project_dir%/tests/tmp']
   TJM\WikiWeb\FormatConverter\MarkdownConverter: ~
