@@ -3,7 +3,7 @@ services:
   _defaults:
     autoconfigure: true
     autowire: true
-  League\CommonMark\CommonMarkConvertera: ~
+  League\CommonMark\CommonMarkConverter: ~
   logger:
     alias: Psr\Log\NullLogger
   Psr\Log\NullLogger: ~
