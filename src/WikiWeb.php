@@ -18,6 +18,8 @@ class WikiWeb{
 	const WEB_DIR = self::DIR . '/web';
 	protected $converters = [];
 	protected $mimeTypes;
+	protected $shell = 'shell.html.twig';
+	protected $twig;
 	protected $wiki;
 
 	public function __construct(Wiki $wiki, array $opts = []){
@@ -69,7 +71,16 @@ class WikiWeb{
 			$response = new Response();
 			try{
 				if(strlen($extension) === 0){
-					$response->setContent('<!doctype html><h1>' . $file->getPath() . '</h1>' . $this->convertFile($file, 'html'));
+					$content = $this->convertFile($file, 'html');
+					if($this->twig){
+						$content = $this->twig->render($this->shell, [
+							'name'=> $file->getPath(),
+							'content'=> $content,
+						]);
+					}else{
+						$content = '<!doctype html>' . $content;
+					}
+					$response->setContent($content);
 				}elseif($extension === $file->getExtension()){
 					$response->setContent($file->getContent());
 					$response->headers->set('Content-Type', $this->getMimeType($extension));

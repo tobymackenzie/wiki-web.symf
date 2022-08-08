@@ -20,6 +20,7 @@
 		,"erusev/parsedown-extra": "~0.8"
 		,"symfony/framework-bundle": "^5.4"
 		,"symfony/mime": "^5.4"
+		,"symfony/twig-bundle": "^5.4"
 		,"symfony/yaml": "^5.4"
 		,"tjm/wiki": "@dev"
 	}

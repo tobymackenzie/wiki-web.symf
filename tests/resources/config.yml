@@ -1,5 +1,6 @@
 framework:
   test: true
+twig: ~
 services:
   _defaults:
     autoconfigure: true
@@ -18,6 +19,7 @@ services:
       $opts:
         converters:
           - '@TJM\WikiWeb\FormatConverter\MarkdownConverter'
+        twig: '@twig'
     tags:
       - 'controller.service_arguments'
       -
