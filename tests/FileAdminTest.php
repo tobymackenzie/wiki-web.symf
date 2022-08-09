@@ -2,7 +2,9 @@
 namespace TJM\WikiWeb\Tests;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
+use TJM\Wiki\File;
 use TJM\WikiWeb\Kernel;
+use TJM\WikiWeb\WikiWeb;
 
 class FileAdminTest extends WebTestCase{
 	const WIKI_DIR = __DIR__ . '/tmp';
@@ -76,5 +78,18 @@ class FileAdminTest extends WebTestCase{
 		$response = $client->getResponse();
 		$this->assertMatchesRegularExpression('/^<\!doctype html>/', $response->getContent());
 		$this->assertMatchesRegularExpression('/123 test/', $response->getContent());
+	}
+	public function testRemoveFile(){
+		$client = static::createClient();
+		static::getContainer()->get(WikiWeb::class)->writeFile(new File([
+			'content'=> 'hello world',
+			'path'=> '/foo.md',
+		]));
+		$client->request('GET', '/foo/_edit');
+		$this->assertResponseIsSuccessful();
+		$client->clickLink('Remove');
+		$this->assertResponseRedirects();
+		$client->request('GET', '/foo');
+		$this->assertResponseStatusCodeSame(404);
 	}
 }

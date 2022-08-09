@@ -12,6 +12,11 @@ class AdminController extends AbstractController{
 	public function __construct(WikiWeb $wiki){
 		$this->wiki = $wiki;
 	}
+	public function adminAction(){
+		return $this->render('admin/admin.html.twig', [
+			'name'=> 'Admin',
+		]);
+	}
 	public function editFileAction(Request $request, $path = null){
 		if($path === null){
 			$file = new File();
@@ -34,8 +39,24 @@ class AdminController extends AbstractController{
 			]);
 		}
 		return $this->renderForm('admin/editFile.html.twig', [
+			'file'=> $file,
 			'form'=> $form,
 			'name'=> $file->getPath() ? "Edit File {$file->getPath()}" : 'Add file',
 		]);
+	}
+	public function removeFileAction(Request $request, $path = null){
+		if($path === null){
+			throw $this->createNotFoundExcetion();
+		}else{
+			if(strpos($path, '.') === false){
+				$file = $this->wiki->getPage($path);
+			}else{
+				$file = $this->wiki->getFile($path);
+			}
+		}
+		if($file){
+			$this->wiki->removeFile($file);
+		}
+		return $this->redirectToRoute('tjm_wiki_admin');
 	}
 }
