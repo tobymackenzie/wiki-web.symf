@@ -4,7 +4,9 @@ framework:
   csrf_protection: ~
   secret: '%env(APP_SECRET)%'
   session: ~
-twig: ~
+twig:
+  globals:
+    wiki: '@TJM\WikiWeb\WikiWeb'
 services:
   _defaults:
     autoconfigure: true

@@ -4,7 +4,9 @@ framework:
   session:
     storage_id: session.storage.mock_file
   test: true
-twig: ~
+twig:
+  globals:
+    wiki: '@TJM\WikiWeb\WikiWeb'
 services:
   _defaults:
     autoconfigure: true

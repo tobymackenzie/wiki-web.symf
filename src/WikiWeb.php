@@ -18,6 +18,7 @@ class WikiWeb{
 	const WEB_DIR = self::DIR . '/web';
 	protected $converters = [];
 	protected $mimeTypes;
+	protected $name = 'TJM Wiki';
 	protected $shell = 'shell.html.twig';
 	protected $twig;
 	protected $wiki;
@@ -45,6 +46,10 @@ class WikiWeb{
 			return call_user_func_array([$this->wiki, $name], $args);
 		}
 		throw new BadMethodCallException();
+	}
+
+	public function getName(){
+		return $this->name;
 	}
 
 	/*=====
