@@ -1,0 +1,4 @@
+_tjm_wiki_admin:
+  resource: admin_routing.yml
+_tjm_wiki_public:
+  resource: public_routing.yml

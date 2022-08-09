@@ -1,4 +1,9 @@
-framework: ~
+parameters:
+  env(APP_SECRET): 'qwoieuskdfj'
+framework:
+  csrf_protection: ~
+  secret: '%env(APP_SECRET)%'
+  session: ~
 twig: ~
 services:
   _defaults:
@@ -15,6 +20,8 @@ services:
   Psr\Log\NullLogger: ~
   TJM\Wiki\Wiki:
     arguments: ['%kernel.project_dir%/wiki']
+  TJM\WikiWeb\AdminController:
+    tags: ['controller.service_arguments']
   TJM\WikiWeb\FormatConverter\MarkdownConverter:
     arguments: ['@League\CommonMark\MarkdownConverter']
   TJM\WikiWeb\WikiWeb:

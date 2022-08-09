@@ -1,0 +1,8 @@
+tjm_wiki_add_file:
+  path: '/_edit'
+  controller: 'TJM\WikiWeb\AdminController::editFileAction'
+tjm_wiki_edit_file:
+  path: '/{path}/_edit'
+  controller: 'TJM\WikiWeb\AdminController::editFileAction'
+  requirements:
+    path: '.*'

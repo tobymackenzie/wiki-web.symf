@@ -1,0 +1,12 @@
+{% extends 'admin/shell.html.twig' %}
+{% block content %}
+{{form_start(form)}}
+{%- if form.name is defined -%}
+{{form_row(form.name)}}
+{%- endif -%}
+{%- if form.content is defined -%}
+{{form_row(form.content)}}
+{%- endif -%}
+<div class="formFoot"><button type="submit">Submit</button></div>
+{{form_end(form)}}
+{% endblock content %}
