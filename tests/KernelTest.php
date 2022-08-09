@@ -66,4 +66,14 @@ class KernelTest extends WebTestCase{
 		$client->request('GET', '/foo.html');
 		$this->assertResponseRedirects('/foo');
 	}
+	public function testRedirectTrailingSlash(){
+		$client = static::createClient();
+		static::getContainer()->get(WikiWeb::class)->writeFile(new File([
+			'content'=> 'hello world',
+			'path'=> '/foo.md',
+		]));
+		$client->followRedirects(false);
+		$client->request('GET', '/foo/');
+		$this->assertResponseRedirects('/foo');
+	}
 }

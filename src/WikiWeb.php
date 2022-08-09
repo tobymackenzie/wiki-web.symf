@@ -57,6 +57,9 @@ class WikiWeb{
 		}
 		$extension = pathinfo($path, PATHINFO_EXTENSION);
 		$pagePath = $extension ? substr($path, 0, -1 * (strlen($extension) + 1)) : $path;
+		if(substr($pagePath, -1) === '/'){
+			$pagePath = substr($pagePath, 0, -1);
+		}
 		if($this->wiki->hasPage($pagePath)){
 			$file = $this->wiki->getPage($pagePath);
 		}else{
@@ -66,6 +69,8 @@ class WikiWeb{
 		}
 		if(isset($file)){
 			if($extension === 'html'){
+				return new RedirectResponse($pagePath, 302);
+			}elseif(substr($path, -1) === '/'){
 				return new RedirectResponse($pagePath, 302);
 			}
 			$response = new Response();

@@ -71,4 +71,13 @@ class WikiWebTest extends TestCase{
 		$response = $wweb->viewFileAction('/foo.html');
 		$this->assertEquals(302, $response->getStatusCode());
 	}
+	public function testRedirectTrailingSlash(){
+		$wweb = $this->getWikiWeb();
+		$wweb->writeFile(new File([
+			'content'=> 'hello world',
+			'path'=> '/foo.md',
+		]));
+		$response = $wweb->viewFileAction('/foo/');
+		$this->assertEquals(302, $response->getStatusCode());
+	}
 }
