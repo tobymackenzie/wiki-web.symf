@@ -1,0 +1,51 @@
+/*--general */
+*{
+	box-sizing: border-box;
+}
+:root{
+	color-scheme: light dark;
+}
+html{
+	background: #efe;
+	color: #020;
+}
+input, select, textarea{
+	background: #fff;
+	color: #020;
+}
+a{
+	color: #0a0;
+}
+@media only screen and (prefers-color-scheme: dark){
+	html, input, select, textarea{
+		background: #020;
+		color: #cfc;
+	}
+	a{
+		color: #6f6;
+	}
+}
+
+/*--shell */
+body{
+	margin: auto;
+	max-width:92%;
+	width:40em;
+}
+
+/*--form */
+* + .formField, * + .formFoot{
+	margin-top: 0.8em;
+}
+input[type="text"], select, textarea{
+	width: 100%;
+}
+textarea{
+	height: 20em;
+}
+label{
+	display: block;
+}
+label:after{
+	content: ':';
+}
