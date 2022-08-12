@@ -90,8 +90,23 @@ class WikiWeb{
 				if(strlen($extension) === 0){
 					$content = $this->convertFile($file, 'html');
 					if($this->twig){
+						if($path === $this->homePage){
+							$name = $this->name;
+						}else{
+							//--use path as name
+							$name = $file->getPath();
+							//---without extension
+							$extension = pathinfo($file->getPath(), PATHINFO_EXTENSION);
+							if($extension){
+								$name = substr($name, 0, -1 * (strlen($extension) + 1));
+							}
+							//---switch '/' to '-', reverse
+							$name = implode(' - ', array_reverse(explode('/', $name)));
+							//---title case
+							$name = ucwords($name);
+						}
 						$content = $this->twig->render($this->shell, [
-							'name'=> $file->getPath(),
+							'name'=> $name,
 							'content'=> $content,
 						]);
 					}else{

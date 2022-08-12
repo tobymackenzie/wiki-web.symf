@@ -56,6 +56,28 @@ class KernelTest extends WebTestCase{
 		$this->assertMatchesRegularExpression('/^<\!doctype html>/', $response->getContent());
 		$this->assertMatchesRegularExpression('/hello world/', $response->getContent());
 	}
+	public function testHomePageName(){
+		$client = static::createClient();
+		static::getContainer()->get(WikiWeb::class)->writeFile(new File([
+			'content'=> 'hello world',
+			'path'=> '/_index.md',
+		]));
+		$client->request('GET', '/');
+		$response = $client->getResponse();
+		$this->assertMatchesRegularExpression('/<title>TJM Wiki<\/title>/', $response->getContent());
+		$this->assertMatchesRegularExpression('/<h1>TJM Wiki<\/h1>/', $response->getContent());
+	}
+	public function testInternalPageName(){
+		$client = static::createClient();
+		static::getContainer()->get(WikiWeb::class)->writeFile(new File([
+			'content'=> 'hello world',
+			'path'=> '/foo/bar.md',
+		]));
+		$client->request('GET', '/foo/bar');
+		$response = $client->getResponse();
+		$this->assertMatchesRegularExpression('/<title>Bar - Foo - TJM Wiki<\/title>/', $response->getContent());
+		$this->assertMatchesRegularExpression('/<h1>Bar - Foo<\/h1>/', $response->getContent());
+	}
 	public function testRedirectHome(){
 		$client = static::createClient();
 		static::getContainer()->get(WikiWeb::class)->writeFile(new File([

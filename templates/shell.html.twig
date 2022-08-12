@@ -1,4 +1,4 @@
 <!doctype html>
-<title>{{name}} - {{wiki.name}}</title>
+<title>{% if name is defined and name != wiki.name %}{{name}} - {% endif %}{{wiki.name}}</title>
 <h1>{{name}}</h1>
 {{content|raw}}
