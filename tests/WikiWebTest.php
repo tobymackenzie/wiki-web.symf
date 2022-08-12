@@ -62,6 +62,15 @@ class WikiWebTest extends TestCase{
 		$this->expectException(NotFoundHttpException::class);
 		$wweb->viewFileAction('/foo.asdf');
 	}
+	public function testRedirectHome(){
+		$wweb = $this->getWikiWeb();
+		$wweb->writeFile(new File([
+			'content'=> 'hello world',
+			'path'=> '/_index',
+		]));
+		$response = $wweb->viewFileAction('/_index');
+		$this->assertEquals(302, $response->getStatusCode());
+	}
 	public function testRedirectHTMLExtension(){
 		$wweb = $this->getWikiWeb();
 		$wweb->writeFile(new File([

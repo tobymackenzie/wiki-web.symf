@@ -17,6 +17,7 @@ class WikiWeb{
 	const CONFIG_DIR = self::DIR . '/config';
 	const WEB_DIR = self::DIR . '/web';
 	protected $converters = [];
+	protected $homePage = '/_index';
 	protected $mimeTypes;
 	protected $name = 'TJM Wiki';
 	protected $shell = 'shell.html.twig';
@@ -59,6 +60,12 @@ class WikiWeb{
 	public function viewFileAction($path){
 		if(substr($path, 0, 1) !== '/'){
 			$path = '/' . $path;
+		}
+		if($path === $this->homePage){
+			return new RedirectResponse('/', 302);
+		}
+		if($path === '/'){
+			$path = $this->homePage;
 		}
 		$extension = pathinfo($path, PATHINFO_EXTENSION);
 		$pagePath = $extension ? substr($path, 0, -1 * (strlen($extension) + 1)) : $path;

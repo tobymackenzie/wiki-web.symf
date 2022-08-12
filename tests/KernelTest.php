@@ -56,6 +56,16 @@ class KernelTest extends WebTestCase{
 		$this->assertMatchesRegularExpression('/^<\!doctype html>/', $response->getContent());
 		$this->assertMatchesRegularExpression('/hello world/', $response->getContent());
 	}
+	public function testRedirectHome(){
+		$client = static::createClient();
+		static::getContainer()->get(WikiWeb::class)->writeFile(new File([
+			'content'=> 'hello world',
+			'path'=> '/_index',
+		]));
+		$client->followRedirects(false);
+		$client->request('GET', '/_index');
+		$this->assertResponseRedirects('/');
+	}
 	public function testRedirectHTMLExtension(){
 		$client = static::createClient();
 		static::getContainer()->get(WikiWeb::class)->writeFile(new File([
