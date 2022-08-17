@@ -14,6 +14,7 @@ class Kernel extends Base{
 	protected $config = WikiWeb::CONFIG_DIR . '/config.yml';
 	protected $debug;
 	protected $environment;
+	protected $projectDir;
 	protected $routes = WikiWeb::CONFIG_DIR . '/routing.yml';
 
 	public function __construct($opts = null){
@@ -54,6 +55,12 @@ class Kernel extends Base{
 		}else{
 			parent::configureRoutes($conf);
 		}
+	}
+	public function getProjectDir(){
+		if(empty($this->projectDir)){
+			$this->projectDir = __DIR__ . '/..';
+		}
+		return $this->projectDir;
 	}
 	public function run(Request $request = null){
 		if(empty($request)){
