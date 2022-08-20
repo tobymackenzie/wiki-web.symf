@@ -16,6 +16,7 @@ class Kernel extends Base{
 	protected $config = WikiWeb::CONFIG_DIR . '/config.yml';
 	protected $debug;
 	protected $environment;
+	protected $bundlesPath;
 	protected $projectDir;
 	protected $routes = WikiWeb::CONFIG_DIR . '/routing.yml';
 
