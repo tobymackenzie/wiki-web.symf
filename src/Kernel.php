@@ -67,7 +67,7 @@ class Kernel extends Base{
 	public function registerBundles(): iterable{
 		if(!empty($this->bundlesPath)){
 			foreach(require($this->bundlesPath) as $class=> $env){
-				if($envs[$this->environment] ?? $envs['all'] ?? false){
+				if($env[$this->environment] ?? $env['all'] ?? false){
 					yield new $class();
 				}
 			}
