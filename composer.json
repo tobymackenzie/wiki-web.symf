@@ -1,5 +1,6 @@
 {
 	"name": "tjm/wiki-web"
+	,"type": "symfony-bundle"
 	,"description": "Web interface for 'tjm/wiki' using Symfony"
 	,"authors": [
 		{
@@ -12,6 +13,7 @@
 	,"autoload": {
 		"psr-4": {
 			"TJM\\WikiWeb\\": "src"
+			,"TJM\\WikiWebBundle\\": "src"
 		}
 	}
 	,"require": {

@@ -20,7 +20,7 @@ class WikiWeb{
 	protected $homePage = '/_index';
 	protected $mimeTypes;
 	protected $name = 'TJM Wiki';
-	protected $shell = 'shell.html.twig';
+	protected $shell = '@TJMWikiWeb/shell.html.twig';
 	protected $twig;
 	protected $wiki;
 

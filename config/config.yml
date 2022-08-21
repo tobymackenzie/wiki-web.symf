@@ -5,7 +5,7 @@ framework:
   secret: '%env(APP_SECRET)%'
   session: ~
 twig:
-  form_themes: ['admin/_form.html.twig']
+  form_themes: ['@TJMWikiWeb/admin/_form.html.twig']
   globals:
     wiki: '@TJM\WikiWeb\WikiWeb'
 services:
@@ -50,7 +50,7 @@ services:
   Psr\Log\NullLogger: ~
   TJM\Wiki\Wiki:
     arguments: ['%kernel.project_dir%/wiki']
-  TJM\WikiWeb\AdminController:
+  TJM\WikiWeb\Controller\AdminController:
     tags: ['controller.service_arguments']
   TJM\WikiWeb\FormatConverter\MarkdownConverter:
     arguments: ['@League\CommonMark\MarkdownConverter']

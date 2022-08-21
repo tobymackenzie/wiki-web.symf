@@ -1,11 +1,12 @@
 <?php
-namespace TJM\WikiWeb;
+namespace TJM\WikiWeb\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TJM\Wiki\File;
 use TJM\Wiki\Wiki;
 use TJM\WikiWeb\Form\FileType;
+use TJM\WikiWeb\WikiWeb;
 
 class AdminController extends AbstractController{
 	protected $wiki;
@@ -13,7 +14,7 @@ class AdminController extends AbstractController{
 		$this->wiki = $wiki;
 	}
 	public function adminAction(){
-		return $this->render('admin/admin.html.twig', [
+		return $this->render('@TJMWikiWeb/admin/admin.html.twig', [
 			'name'=> 'Admin',
 		]);
 	}
@@ -38,7 +39,7 @@ class AdminController extends AbstractController{
 				'path'=> $path ?? $submittedFile->getPath(),
 			]);
 		}
-		return $this->renderForm('admin/editFile.html.twig', [
+		return $this->renderForm('@TJMWikiWeb/admin/editFile.html.twig', [
 			'file'=> $file,
 			'form'=> $form,
 			'name'=> $file->getPath() ? "Edit File {$file->getPath()}" : 'Add file',

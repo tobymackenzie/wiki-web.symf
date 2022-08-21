@@ -1,16 +1,16 @@
 tjm_wiki_admin:
   path: '/_admin'
-  controller: 'TJM\WikiWeb\AdminController::adminAction'
+  controller: 'TJM\WikiWeb\Controller\AdminController::adminAction'
 tjm_wiki_add_file:
   path: '/_edit'
-  controller: 'TJM\WikiWeb\AdminController::editFileAction'
+  controller: 'TJM\WikiWeb\Controller\AdminController::editFileAction'
 tjm_wiki_edit_file:
   path: '/{path}/_edit'
-  controller: 'TJM\WikiWeb\AdminController::editFileAction'
+  controller: 'TJM\WikiWeb\Controller\AdminController::editFileAction'
   requirements:
     path: '.*'
 tjm_wiki_remove_file:
   path: '/{path}/_remove'
-  controller: 'TJM\WikiWeb\AdminController::removeFileAction'
+  controller: 'TJM\WikiWeb\Controller\AdminController::removeFileAction'
   requirements:
     path: '.*'
