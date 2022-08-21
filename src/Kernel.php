@@ -9,9 +9,7 @@ use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use TJM\Wiki\Wiki;
 
 class Kernel extends Base{
-	use MicroKernelTrait{
-		registerBundles as protected parent__RegisterBundles;
-	}
+	use MicroKernelTrait;
 
 	protected $config = WikiWeb::CONFIG_DIR . '/config.yml';
 	protected $debug;
@@ -59,22 +57,14 @@ class Kernel extends Base{
 			parent::configureRoutes($conf);
 		}
 	}
+	private function getBundlesPath(){
+		return $this->bundlesPath ?: $this->getConfigDir() . '/bundles.php';
+	}
 	public function getProjectDir(){
 		if(empty($this->projectDir)){
 			$this->projectDir = __DIR__ . '/..';
 		}
 		return $this->projectDir;
-	}
-	public function registerBundles(): iterable{
-		if(!empty($this->bundlesPath)){
-			foreach(require($this->bundlesPath) as $class=> $env){
-				if($env[$this->environment] ?? $env['all'] ?? false){
-					yield new $class();
-				}
-			}
-		}else{
-			return $this->parent__RegisterBundles();
-		}
 	}
 	public function run(Request $request = null){
 		if(empty($request)){
