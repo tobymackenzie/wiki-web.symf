@@ -28,6 +28,7 @@ services:
       $opts:
         converters:
           - '@TJM\WikiWeb\FormatConverter\MarkdownConverter'
+        router: '@router'
         twig: '@twig'
     tags:
       - 'controller.service_arguments'

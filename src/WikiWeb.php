@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Mime\MimeTypes;
+use Symfony\Component\Routing\RouterInterface;
 use TJM\Wiki\Wiki;
 use TJM\Wiki\File;
 use TJM\WikiWeb\FormatConverter\ConverterInterface;
@@ -20,6 +21,7 @@ class WikiWeb{
 	protected $homePage = '/_index';
 	protected $mimeTypes;
 	protected $name = 'TJM Wiki';
+	protected $router;
 	protected $shell = '@TJMWikiWeb/shell.html.twig';
 	protected $twig;
 	protected $wiki;
@@ -62,7 +64,7 @@ class WikiWeb{
 			$path = '/' . $path;
 		}
 		if($path === $this->homePage){
-			return new RedirectResponse('/', 302);
+			return new RedirectResponse($this->getRoute('tjm_wiki', ['path'=> '/']), 302);
 		}
 		if($path === '/'){
 			$path = $this->homePage;
@@ -81,9 +83,9 @@ class WikiWeb{
 		}
 		if(isset($file)){
 			if($extension === 'html'){
-				return new RedirectResponse($pagePath, 302);
+				return new RedirectResponse($this->getRoute('tjm_wiki', ['path'=> $pagePath]), 302);
 			}elseif(substr($path, -1) === '/'){
-				return new RedirectResponse($pagePath, 302);
+				return new RedirectResponse($this->getRoute('tjm_wiki', ['path'=> $pagePath]), 302);
 			}
 			$response = new Response();
 			try{
@@ -152,6 +154,21 @@ class WikiWeb{
 			}
 		}
 		throw new Exception("No converter found to convert from {$file->getExtension()} to {$to}");
+	}
+
+	/*=====
+	==routing
+	=====*/
+	//-! maybe we should just move actions to a regular controller so we don't need this
+	protected function getRoute($name, $opts, $abs = false){
+		if($this->router){
+			return $this->router->generate($name, $opts, $abs);
+		}elseif($name === 'tjm_wiki' && isset($opts['path'])){
+			return $opts['path'];
+		}
+	}
+	public function setRouter(RouterInterface $router){
+		$this->router = $router;
 	}
 
 	/*=====
