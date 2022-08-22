@@ -60,7 +60,7 @@ class Kernel extends Base{
 	private function getBundlesPath(){
 		return $this->bundlesPath ?: $this->getConfigDir() . '/bundles.php';
 	}
-	public function getProjectDir(){
+	public function getProjectDir(): string{
 		if(empty($this->projectDir)){
 			$this->projectDir = __DIR__ . '/..';
 		}
