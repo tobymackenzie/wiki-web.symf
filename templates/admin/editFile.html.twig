@@ -10,6 +10,7 @@
 <div class="formFoot"><button type="submit">Submit</button></div>
 {{form_end(form)}}
 {%- if form.path is not defined -%}
+<p><a href="{{path('tjm_wiki', {path: path})}}">View</a></p>
 <p><a href="{{path('tjm_wiki_remove_file', {path: file.path})}}">Remove</a></p>
 {%- endif -%}
 {% endblock content %}

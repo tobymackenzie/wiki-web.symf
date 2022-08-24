@@ -43,6 +43,7 @@ class AdminController extends AbstractController{
 			'file'=> $file,
 			'form'=> $form,
 			'name'=> $file->getPath() ? "Edit File {$file->getPath()}" : 'Add file',
+			'path'=> $path,
 		]);
 	}
 	public function removeFileAction(Request $request, $path = null){
