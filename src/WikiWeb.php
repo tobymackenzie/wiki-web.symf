@@ -137,6 +137,9 @@ class WikiWeb{
 			}
 			return $response;
 		}
+		if($this->isLoggedIn() && $this->router){
+			return new RedirectResponse($this->router->generate('tjm_wiki_edit_file', ['path'=> substr($path, 1)]));
+		}
 		throw new NotFoundHttpException();
 	}
 	public function handleException(ExceptionEvent $event){
