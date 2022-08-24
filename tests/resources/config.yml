@@ -26,6 +26,7 @@ services:
   TJM\WikiWeb\WikiWeb:
     arguments:
       $opts:
+        admin: true
         converters:
           - '@TJM\WikiWeb\FormatConverter\MarkdownConverter'
         router: '@router'

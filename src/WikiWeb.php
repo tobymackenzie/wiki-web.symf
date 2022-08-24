@@ -17,12 +17,12 @@ class WikiWeb{
 	const DIR = __DIR__ . '/..';
 	const CONFIG_DIR = self::DIR . '/config';
 	const WEB_DIR = self::DIR . '/web';
+	protected $admin;
 	protected $converters = [];
 	protected $homePage = '/_index';
 	protected $mimeTypes;
 	protected $name = 'TJM Wiki';
 	protected $router;
-	protected $shell = '@TJMWikiWeb/shell.html.twig';
 	protected $twig;
 	protected $wiki;
 
@@ -53,6 +53,13 @@ class WikiWeb{
 
 	public function getName(){
 		return $this->name;
+	}
+
+	/*=====
+	==admin
+	=====*/
+	protected function isLoggedIn(){
+		return $this->admin;
 	}
 
 	/*=====
@@ -107,10 +114,13 @@ class WikiWeb{
 							//---title case
 							$name = ucwords($name);
 						}
-						$content = $this->twig->render($this->shell, [
+						$data = [
 							'name'=> $name,
 							'content'=> $content,
-						]);
+							'isLoggedIn'=> $this->isLoggedIn(),
+							'path'=> substr($path, 1),
+						];
+						$content = $this->twig->render('@TJMWikiWeb/view.html.twig', $data);
 					}else{
 						$content = '<!doctype html>' . $content;
 					}

@@ -4,4 +4,8 @@
 <meta content="initial-scale=1,width=device-width" name="viewport" />
 <link rel="stylesheet" href="{{asset('_assets/styles/public.css')}}" />
 <h1>{{name}}</h1>
+{% if block('content') is defined %}
+{{block('content')|raw}}
+{% else %}
 {{content|raw}}
+{% endif %}
