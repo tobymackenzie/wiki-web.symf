@@ -3,7 +3,14 @@
 <title>{% if name is defined and name != wiki.name %}{{name}} - {% endif %}{{wiki.name}}</title>
 <meta content="initial-scale=1,width=device-width" name="viewport" />
 <link rel="stylesheet" href="{{asset('_assets/styles/public.css')}}" />
+{% if name is defined and name == wiki.name %}
 <h1>{{name}}</h1>
+{% else %}
+<header class="appHeader">
+	<a class="logo" href="{{path('tjm_wiki', {path: ''})}}">{{wiki.name}}</a>
+</header>
+<h1>{{name}}</h1>
+{% endif %}
 {% if block('content') is defined %}
 {{block('content')|raw}}
 {% else %}
