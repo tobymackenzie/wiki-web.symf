@@ -1,5 +1,11 @@
 {% extends '@TJMWikiWeb/admin/shell.html.twig' %}
 {% block content %}
+<h1>{{name}}</h1>
+{% if modifiedDate %}
+<p>
+	Modified: {{modifiedDate.format('Y-m-d H:i:s T')}}
+</p>
+{% endif %}
 {{form_start(form)}}
 {%- if form.path is defined -%}
 {{form_row(form.path)}}

@@ -1,5 +1,7 @@
 <?php
 namespace TJM\WikiWeb\Controller;
+use DateTime;
+use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +29,7 @@ class AdminController extends AbstractController{
 			}else{
 				$file = $this->wiki->getFile($path);
 			}
+			$fullPath = $this->wiki->getFilePath($file);
 		}
 		$form = $this->createForm(FileType::class, $file, [
 			'file'=> $file,
@@ -42,6 +45,7 @@ class AdminController extends AbstractController{
 		return $this->renderForm('@TJMWikiWeb/admin/editFile.html.twig', [
 			'file'=> $file,
 			'form'=> $form,
+			'modifiedDate'=> isset($fullPath) ? (new DateTime('@' . filemtime($fullPath)))->setTimezone(new DateTimeZone(date_default_timezone_get())) : null,
 			'name'=> $file->getPath() ? "Edit File {$file->getPath()}" : 'Add file',
 			'path'=> $path,
 		]);
