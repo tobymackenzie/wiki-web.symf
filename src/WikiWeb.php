@@ -96,8 +96,9 @@ class WikiWeb{
 			}
 			$response = new Response();
 			try{
-				if(strlen($extension) === 0){
-					$content = $this->convertFile($file, 'html');
+				$format = $extension ?: 'html';
+				if($format === 'html' || $format === 'xhtml'){
+					$content = $this->convertFile($file, $format);
 					if($this->twig){
 						if($path === $this->homePage){
 							$name = $this->name;
@@ -115,6 +116,7 @@ class WikiWeb{
 							$name = ucwords($name);
 						}
 						$data = [
+							'format'=> $format,
 							'name'=> $name,
 							'content'=> $content,
 							'isLoggedIn'=> $this->isLoggedIn(),
@@ -124,6 +126,7 @@ class WikiWeb{
 					}else{
 						$content = '<!doctype html>' . $content;
 					}
+					$response->headers->set('Content-Type', $this->getMimeType($format));
 					$response->setContent($content);
 				}elseif($extension === $file->getExtension()){
 					$response->setContent($file->getContent());
