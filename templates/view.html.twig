@@ -1,9 +1,9 @@
 {% extends '@TJMWikiWeb/shell.html.twig' %}
 {% block content %}
 {{content|raw}}
-{% if isLoggedIn and path is defined %}
+{% if isLoggedIn and pagePath is defined %}
 <footer>
-	<a href="{{path('tjm_wiki_edit_file', {path: path})}}">Edit</a>
+	<a href="{{path('tjm_wiki_edit_file', {path: pagePath})}}">Edit</a>
 </footer>
 {% endif %}
 {% endblock content %}

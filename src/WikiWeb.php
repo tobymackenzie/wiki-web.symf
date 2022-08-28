@@ -120,7 +120,7 @@ class WikiWeb{
 							'name'=> $name,
 							'content'=> $content,
 							'isLoggedIn'=> $this->isLoggedIn(),
-							'path'=> substr($path, 1),
+							'pagePath'=> substr($pagePath, 1),
 						];
 						$content = $this->twig->render('@TJMWikiWeb/view.html.twig', $data);
 					}else{
