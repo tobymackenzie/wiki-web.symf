@@ -45,7 +45,7 @@ class AdminController extends AbstractController{
 		return $this->renderForm('@TJMWikiWeb/admin/editFile.html.twig', [
 			'file'=> $file,
 			'form'=> $form,
-			'modifiedDate'=> isset($fullPath) ? (new DateTime('@' . filemtime($fullPath)))->setTimezone(new DateTimeZone(date_default_timezone_get())) : null,
+			'modifiedDate'=> isset($fullPath) && is_readable($fullPath) ? (new DateTime('@' . filemtime($fullPath)))->setTimezone(new DateTimeZone(date_default_timezone_get())) : null,
 			'name'=> $file->getPath() ? "Edit File {$file->getPath()}" : 'Add file',
 			'path'=> $path,
 		]);
