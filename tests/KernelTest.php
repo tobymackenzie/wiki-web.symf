@@ -60,7 +60,7 @@ class KernelTest extends WebTestCase{
 		$client = static::createClient();
 		static::getContainer()->get(WikiWeb::class)->writeFile(new File([
 			'content'=> 'hello world',
-			'path'=> '/_index.md',
+			'path'=> '/index.md',
 		]));
 		$client->request('GET', '/');
 		$response = $client->getResponse();
@@ -82,10 +82,10 @@ class KernelTest extends WebTestCase{
 		$client = static::createClient();
 		static::getContainer()->get(WikiWeb::class)->writeFile(new File([
 			'content'=> 'hello world',
-			'path'=> '/_index',
+			'path'=> '/index',
 		]));
 		$client->followRedirects(false);
-		$client->request('GET', '/_index');
+		$client->request('GET', '/index');
 		$this->assertResponseRedirects('/');
 	}
 	public function testRedirectHTMLExtension(){

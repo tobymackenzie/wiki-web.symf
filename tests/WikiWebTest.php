@@ -66,9 +66,9 @@ class WikiWebTest extends TestCase{
 		$wweb = $this->getWikiWeb();
 		$wweb->writeFile(new File([
 			'content'=> 'hello world',
-			'path'=> '/_index',
+			'path'=> '/index',
 		]));
-		$response = $wweb->viewFileAction('/_index');
+		$response = $wweb->viewFileAction('/index');
 		$this->assertEquals(302, $response->getStatusCode());
 	}
 	public function testRedirectHTMLExtension(){

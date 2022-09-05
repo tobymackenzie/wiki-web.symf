@@ -19,7 +19,7 @@ class WikiWeb{
 	const WEB_DIR = self::DIR . '/web';
 	protected $admin;
 	protected $converters = [];
-	protected $homePage = '/_index';
+	protected $homePage = '/index';
 	protected $mimeTypes;
 	protected $name = 'TJM Wiki';
 	protected $router;
