@@ -53,7 +53,7 @@ class KernelTest extends WebTestCase{
 		$client->request('GET', '/foo');
 		$this->assertResponseIsSuccessful();
 		$response = $client->getResponse();
-		$this->assertMatchesRegularExpression('/^<\!doctype html>/', $response->getContent());
+		$this->assertMatchesRegularExpression('/^<\!doctype html>/i', $response->getContent());
 		$this->assertMatchesRegularExpression('/hello world/', $response->getContent());
 	}
 	public function testHomePageName(){

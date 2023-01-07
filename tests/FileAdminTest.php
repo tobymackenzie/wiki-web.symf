@@ -50,7 +50,7 @@ class FileAdminTest extends WebTestCase{
 		]);
 		$client->followRedirect();
 		$response = $client->getResponse();
-		$this->assertMatchesRegularExpression('/^<\!doctype html>/', $response->getContent());
+		$this->assertMatchesRegularExpression('/^<\!doctype html>/i', $response->getContent());
 		$this->assertMatchesRegularExpression('/123 test/', $response->getContent());
 	}
 	public function testCreateNamedFile(){
@@ -64,7 +64,7 @@ class FileAdminTest extends WebTestCase{
 		]);
 		$client->followRedirect();
 		$response = $client->getResponse();
-		$this->assertMatchesRegularExpression('/^<\!doctype html>/', $response->getContent());
+		$this->assertMatchesRegularExpression('/^<\!doctype html>/i', $response->getContent());
 		$this->assertMatchesRegularExpression('/hello world/', $response->getContent());
 		$this->assertTrue(file_exists(self::WIKI_DIR . '/foo.md'));
 
@@ -76,7 +76,7 @@ class FileAdminTest extends WebTestCase{
 		]);
 		$client->followRedirect();
 		$response = $client->getResponse();
-		$this->assertMatchesRegularExpression('/^<\!doctype html>/', $response->getContent());
+		$this->assertMatchesRegularExpression('/^<\!doctype html>/i', $response->getContent());
 		$this->assertMatchesRegularExpression('/123 test/', $response->getContent());
 	}
 	public function testRemoveFile(){
